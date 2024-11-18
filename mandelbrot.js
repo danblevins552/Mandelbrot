@@ -5,25 +5,28 @@ canvas.width = 800;
 canvas.height = 800;
 
 const maxIterations = 1000;
-const zoom = 200;
+const zoom = 300;
 const offsetX = canvas.width / 2;
 const offsetY = canvas.height / 2;
 
 for (let x = 0; x < canvas.width; x++) {
     for (let y = 0; y < canvas.height; y++) {
-        let a = (x - offsetX) / zoom;
-        let b = (y - offsetY) / zoom;
+        let real = (x - offsetX) / zoom;
+        let imaginary = (y - offsetY) / zoom;
 
-        let ca = a;
-        let cb = b;
+        const creal = real;
+        const cimaginary = imaginary;
 
         let n = 0;
         while (n < maxIterations) {
-            const aa = a * a - b * b;
-            const bb = 2 * a * b;
-            a = aa + ca;
-            b = bb + cb;
-            if (Math.abs(a + b) > 16) break;
+            const real_square = real * real - imaginary * imaginary;
+            const imaginary_square = 2 * real * imaginary;
+
+            real = real_square + creal;
+            imaginary = imaginary_square + cimaginary;
+
+            if (real * real + imaginary * imaginary > 4) break;
+
             n++;
         }
 
